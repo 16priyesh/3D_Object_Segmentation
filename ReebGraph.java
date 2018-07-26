@@ -37,9 +37,9 @@ class ReebGraph{
 		 the reeb graph. So we iterate through all the levels to partition them. We use breadth first
 		 traversal to make partitions at a particular level.
 		 We iterate through all the ugcs' at a level marking them visited as encountered.
-		 Each time we encounter a unvisited object occupied ugc, we make a new partition/node and 
+		 Each time we encounter a unvisited object occupied ugc, we make a new partition/node and
 		 use breadth first traversal to find other neighbouring object occupied ugc
-		 which are going to be a part of this node and mark them all as visited. Like this we 
+		 which are going to be a part of this node and mark them all as visited. Like this we
 		 identify all the components or say the nodes of the reeb graph.*/
 
 		Queue<UgcIndex> queue = new LinkedList<UgcIndex>(); //queue for breadth first traversal
@@ -84,14 +84,14 @@ class ReebGraph{
 		/*here we simply check all the ugc's in a node to check if it touches any other ugc of other
 		level and if does we add the two nodes at different level as neighbours of each other*/
 
-		for(int k=0; k<levels-1; k++){ 
+		for(int k=0; k<levels-1; k++){
 			for(Node node : nodes.get(k)){//for each node at a level
-				for(UgcIndex u : node.S){ 
+				for(UgcIndex u : node.S){
 					if(ic.grid[u.x][u.y][u.z+1].T.size()!=0){//we check each of its object occupied ugcs'
 						for(Node upperNode : nodes.get(k+1)){//for each node of next level
 							for(UgcIndex v : upperNode.S) if(v.x==u.x&&v.y==u.y&&v.z==u.z+1){
 								//we find the node to which the touching object occupied ugc belongs
-								//and add them as each others neighbour if they don't already contain 
+								//and add them as each others neighbour if they don't already contain
 								//each other.
 								boolean flag = true;
 								for(NodeIndex n: node.nextNeighbours)
@@ -155,9 +155,9 @@ class ReebGraph{
 
 		//now connecting all the nodes similar to that along z
 
-		for(int k=0; k<levels-1; k++){ 
+		for(int k=0; k<levels-1; k++){
 			for(Node node : nodes.get(k)){//for each node at a level
-				for(UgcIndex u : node.S){ 
+				for(UgcIndex u : node.S){
 					if(ic.grid[u.x][u.y+1][u.z].T.size()!=0){//we check each of its object occupied ugcs'
 						for(Node upperNode : nodes.get(k+1)){//for each node of next level
 							for(UgcIndex v : upperNode.S) if(v.x==u.x&&v.y==u.y+1&&v.z==u.z){
@@ -225,9 +225,9 @@ class ReebGraph{
 
 		//now connecting all the nodes similar to that along z
 
-		for(int k=0; k<levels-1; k++){ 
+		for(int k=0; k<levels-1; k++){
 			for(Node node : nodes.get(k)){//for each node at a level
-				for(UgcIndex u : node.S){ 
+				for(UgcIndex u : node.S){
 					if(ic.grid[u.x+1][u.y][u.z].T.size()!=0){//we check each of its object occupied ugcs'
 						for(Node upperNode : nodes.get(k+1)){//for each node of next level
 							for(UgcIndex v : upperNode.S) if(v.x==u.x+1&&v.y==u.y&&v.z==u.z){
@@ -253,7 +253,7 @@ class ReebGraph{
 
 	//driver program for testing
 
-	/*public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {
 		ReebGraph rg = new ReebGraph(new IsotheticCover(1,new File("example2.obj")), 2);
 		int count = 1;
 		for(int i=0; i<rg.levels; i++){
@@ -268,6 +268,6 @@ class ReebGraph{
 				count++;
 			}
 		}
-	}*/
+	}
 
 }

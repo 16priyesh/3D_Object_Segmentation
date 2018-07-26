@@ -26,8 +26,6 @@ class RenderIsotheticCover{
     public static void main(String[] args) throws Exception {
         File file = new File("canstick.obj");
         IsotheticCover ic = new IsotheticCover(0.001,file);
-        //IsotheticCoverApproximate ic = new IsotheticCoverApproximate(50,file);
-        //IsotheticCoverWithoutSAT ic = new IsotheticCoverWithoutSAT(50,file);
         FileWriter writer = new FileWriter("C:\\Users\\Priyesh Kumar\\Desktop\\IsotheticCoverOf" + file.getName() + ".obj");
         BufferedWriter buffer = new BufferedWriter(writer);
         int l=0;

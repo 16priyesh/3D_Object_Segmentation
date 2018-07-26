@@ -23,7 +23,7 @@ class ArticulatedComponents{
 					}
 					if(temp.size()!=0) comp.add(temp);
 				}
-			} 
+			}
 		}
 	}
 }

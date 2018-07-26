@@ -69,11 +69,11 @@ class IsotheticCover{
 
 		//now making the outer 3d isothetic cover
 		/*
-			for each triangular face, we will look at all the ugcs' intersected by the triangle and 
+			for each triangular face, we will look at all the ugcs' intersected by the triangle and
 			store the index of those ugcs' in a arraylist temp while adding the index of this triangle
 			to set T of all these ugcs'. Now all the ugcs' in the temp are added to each other's list U.
-			This completes all the enteries due to a particular face. While adding these information 
-			we ensure that no duplicate enteries are made in any set. 
+			This completes all the enteries due to a particular face. While adding these information
+			we ensure that no duplicate enteries are made in any set.
 			Ti - list of triangles(ti) intesecting the ith ugc. (Topological space X)
 			Ui - list of ugcs'(ui) intersected by triangles in Ti. (Topological space W)
 		*/
@@ -121,9 +121,9 @@ class IsotheticCover{
 
 	private void addTraingle(int t, ArrayList<UgcIndex> temp){
 
-		//this function adds the triangle t to set Ti of all Ugcs' ui which it intersects and 
+		//this function adds the triangle t to set Ti of all Ugcs' ui which it intersects and
 		//maintains the list of those ugcs in temp
-		
+
 		int[] indexOfVertices = faces.get(t).getVertices();
 		double[][] vert = new double[3][3];
 		for(int i=0; i<3; i++){
@@ -154,8 +154,6 @@ class IsotheticCover{
 		//checking overlappings and if it exists then adds the triangle to that ugc
 		//f not added yet and then adding that ugc to temp
 
-		/*
-		for SAT voxelization based
 		OverlapTester test = new OverlapTester();
 		double[] halfSize = {g/2,g/2,g/2};
 		for(int i=starting.x; i<=ending.x; i++){
@@ -176,51 +174,13 @@ class IsotheticCover{
 					}
 				}
 			}
-		}*/
-
-		// for 3d isothetic cover
-		OverlapTester test = new OverlapTester();
-		for(int i=starting.x; i<=ending.x; i++){
-			for(int j=starting.y; j<=ending.y; j++){
-				for(int k=starting.z; k<=ending.z; k++){
-					double[] min = new double[3];
-					min[0] = g*(i+base[0]);
-					min[1] = g*(j+base[1]);
-					min[2] = g*(k+base[2]);
-					boolean overlap = isObjectOccupiedBox(test, min, t);
-					if(overlap){
-						boolean flag = false;                                                                                                                                  //checking for duplicacy
-						if(grid[i][j][k].T!=null) for(int x:grid[i][j][k].T) if(x==t) flag=true;
-						if(!flag) {
-							grid[i][j][k].T.add(t);
-							temp.add(new UgcIndex(i,j,k));
-						}
-					}
-				}
-			}
 		}
 	}
-
-	private boolean isObjectOccupiedBox(OverlapTester test, double[] min, int t) {
-		int[] indexOfVertices = faces.get(t).getVertices();
-		Vertex triA = vertices.get(indexOfVertices[0]);
-		Vertex triB = vertices.get(indexOfVertices[1]);
-		Vertex triC = vertices.get(indexOfVertices[2]);
-
-    	boolean f1 = test.TrianglePlaneIntersection(triA, triB, triC, new double[] {min[0], min[1]} , g , min[2]);
-    	boolean f2 = test.TrianglePlaneIntersection(triA, triB, triC, new double[] {min[0], min[1]} , g , min[2]+g);
-    	boolean f3 = test.TrianglePlaneIntersection(triA, triB, triC, new double[] {min[1], min[2]} , g , min[0]);
-    	boolean f4 = test.TrianglePlaneIntersection(triA, triB, triC, new double[] {min[1], min[2]} , g , min[0]+g);
-    	boolean f5 = test.TrianglePlaneIntersection(triA, triB, triC, new double[] {min[0], min[2]} , g , min[1]);
-  		boolean f6 = test.TrianglePlaneIntersection(triA, triB, triC, new double[] {min[0], min[2]} , g , min[1]+g);
-
-  		
-  	}
 
 	//driver program to test Isothetic cover
 
 	public static void main(String[] args) throws Exception{
-		
+
 		//driver program for testing
 
 		IsotheticCover ic = new IsotheticCover(70, new File("elephant.obj"));
@@ -229,7 +189,7 @@ class IsotheticCover{
 			for(int j=0; j<ic.ly; j++){
 				for(int i=0; i<ic.lx; i++){
 					if(ic.grid[i][j][k].T.size()!=0){ //checking object occupied ugc
-						System.out.println("T"+count); //printing set T 
+						System.out.println("T"+count); //printing set T
 						for(int x:ic.grid[i][j][k].T) {System.out.print("t"+x+" ");}
 						System.out.print("\nU"+count+"\n"); //printing set U
 						for(UgcIndex v:ic.grid[i][j][k].U) System.out.print("u"+v.x+v.y+v.z+" ");
